@@ -7,10 +7,10 @@
     <script type="module" src="../tooling/smpte.js"></script>
     <meta itemprop="pubType" content="AG" />
     <meta itemprop="pubNumber" content="33" />
-    <meta itemprop="pubState" content="draft" />
+    <meta itemprop="pubState" content="pub" />
     <meta itemprop="pubConfidential" content="yes" />
     <meta itemprop="pubTC" content="ST" />
-    <!-- <meta itemprop="pubDateTime" content="20XX-XX-XX" /> -->
+    <meta itemprop="pubDateTime" content="2026-05-05" />
     <!-- <meta itemprop="pubRevisionOf" content="SMPTE ST XXXX-Y:ZZZZ" /> -->
 
     <title>Document Process and Workflow</title>
@@ -18,7 +18,712 @@
   <body>
 
     <section id="sec-scope">
-      <p>This is the scope. See <a>https://doc.smpte-doc.org/html-pub/main/</a> for documentation on how to use this template.</p>
+      <p>This document describes the process and workflow for the development and publication of SMPTE Engineering Documents using the GitHub-based authoring tooling defined in <a href="#bib-smpte-ag-26"></a>.</p>
+    </section>
+
+    <section id="sec-normative-references">
+      <ul>
+        <li><cite id="bib-smpte-standards-operations-manual">SMPTE Standards Operations Manual</cite>
+         <a>https://doc.smpte-doc.org/standards-operations-manual/main/</a></li>
+        <li><cite id="bib-smpte-ag-02">SMPTE AG 02</cite>, Document Naming and Packaging
+         <a>https://doc.smpte-doc.org/ag-02/main/</a></li>
+        <li><cite id="bib-smpte-ag-07">SMPTE AG 07</cite>, Document Flowcharts
+         <a>https://doc.smpte-doc.org/ag-07/main/</a></li>
+        <li><cite id="bib-smpte-ag-26">SMPTE AG 26</cite>, HTML Pub: Tooling and documentation for HTML documents
+         <a>https://doc.smpte-doc.org/html-pub/main/</a></li>
+        <li><cite id="bib-smpte-ag-31">SMPTE AG 31</cite>, GitHub Operating Guidelines
+         <a>https://doc.smpte-doc.org/ag-31/main/</a></li>
+        <li><cite id="bib-smpte-document-library">SMPTE Document Library</cite>
+         <a>https://github.com/SMPTE/document-library</a></li>
+      </ul>
+    </section>
+
+    <section id="sec-document-mapping-status">
+      <h2>Mapping <code>meta</code> tags to Document Status</h2>
+      <p>
+        <a href="#tab-document-mapping-status"></a> maps the required <code>content</code> values of   <code>pubState</code>, <code>pubStage</code>, and <code>pubConfidential</code> as defined in <a href="#bib-smpte-ag-26"></a> during the various stages of document development. These values represent the naming convention(s) as defined in <a href="#bib-smpte-ag-02"></a> and flowcharts as defined in <a href="#bib-smpte-ag-07"></a>
+      </p>
+      <table id="tab-document-mapping-status" class="col-2-center col-3-center col-4-center col-5-center">
+        <caption>Mapping <code>content</code> values for <code>meta</code> tags to Document Status</caption>
+        <thead>
+          <tr>
+            <th>Document Status</th>
+            <th><code>pubStage</code> value</th>
+            <th><code>pubState</code> value</th>
+            <th><code>pubConfidential</code> value</th>
+            <th>See</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Initial draft or revision (Working Draft) in:
+              <br/>Draft Group (DG)
+              <br/>Study Group (SG)
+              <br/>Working Group (WG)</td>
+            <td><code>WD</code></td>
+            <td><code>draft</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-wd-draft"></a></td>
+          </tr>
+          <tr>
+            <td class="center-cell" colspan="5"><em>>> Document moves to TC >></em></td>
+          </tr>
+          <tr>
+            <td>Pre-FCD (Final Committee Draft) review</td>
+            <td><code>WD</code></td>
+            <td><code>pub</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-wd-pub"></a></td>
+          </tr>
+          <tr>
+            <td class="center-cell" colspan="5"><em>>> If pre-FCD comments received, back to DG/SG/WG >></em></td>
+          </tr>
+          <tr>
+            <td>Pre-FCD comment resolution ongoing </td>
+            <td><code>CD</code></td>
+            <td><code>draft</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-cd-draft"></a></td>
+          </tr>
+          <tr>
+            <td>Pre-FCD comment resolution complete </td>
+            <td><code>CD</code></td>
+            <td><code>pub</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-cd-pub"></a></td>
+          </tr>
+          <tr>
+            <td class="center-cell" colspan="5"><em>>> Document moves to TC >></em></td>
+          </tr>
+          <tr>
+            <td>PCD (Public Committee Draft) period</td>
+            <td><code>CD</code></td>
+            <td><code>pub</code></td>
+            <td><code>no</code></td>
+            <td><a href="#sec-state-cd-pub-public"></a></td>
+          </tr>
+          <tr>
+            <td>PCD comment resolution ongoing (moves back to DG/SG/WG)</td>
+            <td><code>CD</code></td>
+            <td><code>draft</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-cd-draft"></a></td>
+          </tr>
+          <tr>
+            <td>PCD comment resolution complete</td>
+            <td colspan="4"><em>>> Back to Pre-FCD (Final Committee Draft) review >></em></td>
+          </tr>
+
+          <tr>
+            <td class="center-cell" colspan="5"><em>(OR)</em></td>
+          </tr>
+          <tr>
+            <td>Ready for FCD ballot</td>
+            <td><code>CD</code></td>
+            <td><code>pub</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-cd-pub"></a></td>
+          </tr>
+          <tr>
+            <td>FCD ballot period</td>
+            <td><code>CD</code></td>
+            <td><code>pub</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-fcd-ballot"></a></td>
+          </tr>
+          <tr>
+            <td class="center-cell" colspan="5"><em>>> If FCD ballot comments received >></em></td>
+          </tr>
+          <tr>
+            <td>FCD ballot comment resolution ongoing</td>
+            <td><code>FCD</code></td>
+            <td><code>draft</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-fcd-draft"></a></td>
+          </tr>
+          <tr>
+            <td>FCD ballot comment resolution complete</td>
+            <td><code>FCD</code></td>
+            <td><code>pub</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-fcd-pub"></a></td>
+          </tr>
+          <tr>
+            <td>Pre-DP (Draft Publication) review</td>
+            <td><code>FCD</code></td>
+            <td><code>pub</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-fcd-pub"></a></td>
+          </tr>
+          <tr>
+            <td>DP ballot period</td>
+            <td><code>FCD</code></td>
+            <td><code>pub</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-dp-ballot"></a></td>
+          </tr>
+          <tr>
+            <td class="center-cell" colspan="5"><em>(ELSE)</em></td>
+          </tr>
+          <tr>
+            <td>FCD ballot passes, no comments</td>
+            <td><code>DP</code></td>
+            <td><code>pub</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-dp-pub"></a></td>
+          </tr>
+          <tr>
+            <td>DP ballot passes</td>
+            <td><code>DP</code></td>
+            <td><code>pub</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-dp-pub"></a></td>
+          </tr>
+          <tr>
+            <td>Ready for ST (Standards Committee) Audit</td>
+            <td><code>DP</code></td>
+            <td><code>pub</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-dp-pub"></a></td>
+          </tr>
+          <tr>
+            <td>ST Audit period</td>
+            <td><code>DP</code></td>
+            <td><code>pub</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-st-audit"></a></td>
+          </tr>
+          <tr>
+            <td>ST Audit complete</td>
+            <td><code>PUB</code></td>
+            <td><code>draft</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-pub-draft"></a></td>
+          </tr>
+          <tr>
+            <td>Waiting for publication</td>
+            <td><code>PUB</code></td>
+            <td><code>draft</code></td>
+            <td><code>yes</code></td>
+            <td><a href="#sec-state-pub-draft"></a></td>
+          </tr>
+          <tr>
+            <td>Published</td>
+            <td><code>PUB</code></td>
+            <td><code>pub</code></td>
+            <td><code>no</code></td>
+            <td><a href="#sec-state-pub-pub"></a></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        See <a href="#sec-workflow"></a> for the workflow utilizing these statuses.
+      </p>
+
+    </section>
+
+    <section id="sec-pr-guidelines">
+      <h2>GitHub PR (Pull Request) Guidelines</h2>
+
+      <p>Changes to a document shall not be made directly on the <code>main</code> branch. All changes shall be made on a separate branch and merged to <code>main</code> via a Pull Request, so that the tooling can produce the required redlines (see <a href="#bib-smpte-ag-26"></a>).</p>
+
+      <p>Each PR shall have at least one approver who is not the PR author. Approval requirements that vary by document stage are specified in <a href="#sec-workflow"></a>.</p>
+
+    </section>
+
+    <section id="sec-workflow">
+      <h2>Document Workflow</h2>
+
+      <section id="sec-workflow-general">
+        <h3>General</h3>
+
+        <p>At any moment, a document is in one of the statuses listed in <a href="#tab-document-mapping-status"></a>. The document's <code>pubState</code>, <code>pubStage</code>, and (during the PCD period) <code>pubConfidential</code> metadata values determine which one, as defined in <a href="#bib-smpte-ag-26"></a>.</p>
+
+        <p>A <em>pub</em> status (<code>pubState=pub</code>) lives on <code>main</code>, marked by an auto-drafted release. A <em>draft</em> status (<code>pubState=draft</code>) lives on a feature branch with an open Pull Request, which is the work container for that status &mdash; the PR accumulates commits while work is ongoing, and the tooling generates redlines on each PR build per <a href="#bib-smpte-ag-26"></a>. The document advances by merging that PR to <code>main</code>; merges that result in <code>pubState=pub</code> trigger the tooling to auto-draft a release per <a href="#bib-smpte-ag-26"></a>.</p>
+
+        <p>Each status is described below in a card with the same fields: <em>Description</em>, <em>Metadata</em>, <em>Branch</em>, <em>Latest release</em>, <em>Redline</em>, and <em>Notification</em>. After the fields, each card lists numbered procedures for entering and leaving the status, following <a href="#sec-pr-guidelines"></a>. Each procedure step that requires a specific role is tagged with the role identifier defined in <a href="#sec-workflow-roles"></a>; steps without a role tag (such as merging the PR or publishing the auto-drafted release) may be performed by any party with appropriate permissions.</p>
+
+        <p class="note">Editors and Chairs should be aware of the general guidelines provided in <a href="#bib-smpte-ag-31"></a>.</p>
+      </section>
+
+      <section id="sec-workflow-roles">
+        <h3>Roles</h3>
+
+        <p>Roles are as defined by <a href="#bib-smpte-standards-operations-manual"></a>. The identifiers below are used in this clause to tag procedure steps with the responsible role.</p>
+
+        <dl>
+          <dt id="role-document-editor"><strong>Document editor</strong></dt>
+          <dd>The person designated by the project to edit the document.</dd>
+
+          <dt id="role-dg-chair"><strong>DG chair</strong></dt>
+          <dd>The chair of the Drafting Group, Study Group, or Working Group developing the document.</dd>
+
+          <dt id="role-tc-chair"><strong>TC chair</strong></dt>
+          <dd>The chair (or one of the chairs) of the parent Technology Committee.</dd>
+
+          <dt id="role-github-admin"><strong>GitHub admin</strong></dt>
+          <dd>The person responsible for repository administration per <a href="#bib-smpte-ag-31"></a>.</dd>
+
+          <dt id="role-smpte-ho"><strong>SMPTE HO</strong></dt>
+          <dd>SMPTE Headquarters Office, including the Director of Engineering.</dd>
+        </dl>
+      </section>
+
+      <section id="sec-state-wd-draft">
+        <h3><code>WD-draft</code> &mdash; Initial draft / DG drafting</h3>
+        <dl>
+          <dt data-slot="description">Description</dt>
+          <dd>Drafting work in DG / SG / WG. Both initial drafts and revisions begin here.</dd>
+          <dt data-slot="metadata">Metadata</dt>
+          <dd><code>pubState=draft</code>, <code>pubStage=WD</code>, <code>pubConfidential=yes</code></dd>
+          <dt data-slot="branch">Branch</dt>
+          <dd><code>YYYY-initial-draft</code> (new document) or <code>YYYY-revision</code> (revising), branched from <code>main</code></dd>
+          <dt data-slot="release">Latest release</dt>
+          <dd>None for an initial draft. For a revision, the prior <code>YYYYMMDD-pub</code> release of the previous edition.</dd>
+          <dt data-slot="redline">Redline</dt>
+          <dd><code>pub-rl.html</code> versus the prior published edition (revisions only)</dd>
+          <dt data-slot="notification">Notification</dt>
+          <dd>None &mdash; internal DG iteration.</dd>
+        </dl>
+
+        <p><strong>Entering this status:</strong></p>
+
+        <p><em>For an initial draft:</em></p>
+        <ol>
+          <li data-actor="github-admin"><em>GitHub admin:</em> Set up the document repository per <a href="#bib-smpte-ag-26"></a>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYY-initial-draft</code> from <code>main</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubState=draft</code>, <code>pubStage=WD</code>, and <code>pubConfidential=yes</code> per <a href="#bib-smpte-ag-26"></a>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Add the initial draft content.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the branch to <code>main</code>. The PR build generates redlines per <a href="#bib-smpte-ag-26"></a>.</li>
+          <li>The document is now in <code>WD-draft</code>. Drafting work continues as additional commits to this open PR.</li>
+        </ol>
+
+        <p><em>For a revision:</em></p>
+        <ol>
+          <li data-actor="document-editor"><em>Document editor:</em> Identify the prior published release tag <code>YYYYMMDD-pub</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYY-revision</code> from <code>main</code> (which contains the prior published state).</li>
+          <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubState=draft</code>, <code>pubStage=WD</code>, and <code>pubConfidential=yes</code> per <a href="#bib-smpte-ag-26"></a>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Make the initial revision changes.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the branch to <code>main</code>. The PR build generates redlines including <code>pub-rl.html</code> versus the prior published edition.</li>
+          <li>The document is now in <code>WD-draft</code>. Revision work continues as additional commits to this open PR.</li>
+        </ol>
+
+        <p class="note">During drafting, the DG may merge interim drafts to <code>main</code> as needed to refresh redlines &mdash; for example, to make redlines available between drafting meetings &mdash; or to share intermediate progress. Such merges keep <code>pubState=draft</code> and do not advance the document out of <code>WD-draft</code>; subsequent drafting continues in a new PR opened from <code>main</code>.</p>
+
+        <p><strong>Leaving this status:</strong></p>
+
+        <p><em>When the DG declares drafting complete:</em></p>
+        <ol>
+          <li data-actor="document-editor"><em>Document editor:</em> On the open PR, set <code>pubState=pub</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Set <code>pubDateTime</code> to the date drafting was completed (format: <code>YYYY-MM-DD</code>).</li>
+          <li data-actor="dg-chair"><em>DG chair:</em> Reviews and approves the PR.</li>
+          <li>Merge the PR to <code>main</code>. The tooling auto-drafts a <code>YYYYMMDD-wd</code> release.</li>
+          <li>Publish the auto-drafted release per <a href="#bib-smpte-ag-26"></a>.</li>
+          <li data-actor="dg-chair"><em>DG chair:</em> Notifies the TC chair the document is ready for Pre-FCD review.</li>
+          <li data-actor="tc-chair"><em>TC chair:</em> Requests/starts Pre-FCD review from SMPTE HO.</li>
+          <li>The document is now in <a href="#sec-state-wd-pub"></a>.</li>
+        </ol>
+      </section>
+
+      <section id="sec-state-wd-pub">
+        <h3><code>WD-pub</code> &mdash; Pre-FCD TC review</h3>
+        <dl>
+          <dt data-slot="description">Description</dt>
+          <dd>2-week TC review of the completed Working Draft.</dd>
+          <dt data-slot="metadata">Metadata</dt>
+          <dd><code>pubState=pub</code>, <code>pubStage=WD</code>, <code>pubConfidential=yes</code></dd>
+          <dt data-slot="branch">Branch</dt>
+          <dd>Status lives on <code>main</code>.</dd>
+          <dt data-slot="release">Latest release</dt>
+          <dd><code>YYYYMMDD-wd</code></dd>
+          <dt data-slot="redline">Redline</dt>
+          <dd><code>release-rl.html</code> versus the prior dated release (when present)</dd>
+          <dt data-slot="notification">Notification</dt>
+          <dd>The TC chair sends the release link to the TC for the 2-week pre-FCD review.</dd>
+        </dl>
+
+        <p><strong>Leaving this status:</strong></p>
+
+        <p><em>If pre-FCD comments are received:</em></p>
+        <ol>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-cd1</code> from <code>main</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubState=draft</code> and <code>pubStage=CD</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the new branch to <code>main</code>. The PR is the work container for the next status; do not merge yet.</li>
+          <li>The document is now in <a href="#sec-state-cd-draft"></a>. Comment resolution work happens as additional commits to this open PR; the PR is merged when leaving <code>CD-draft</code>.</li>
+        </ol>
+
+        <p><em>If no pre-FCD comments are received:</em></p>
+        <ol>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-cd1</code> from <code>main</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubState=pub</code> and <code>pubStage=CD</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the new branch to <code>main</code>.</li>
+          <li data-actor="dg-chair"><em>DG chair:</em> Reviews and approves the PR.</li>
+          <li>Merge the PR to <code>main</code>. The tooling auto-drafts a <code>YYYYMMDD-cd1</code> release.</li>
+          <li>Publish the auto-drafted release per <a href="#bib-smpte-ag-26"></a>.</li>
+          <li>The document is now in <a href="#sec-state-cd-pub"></a>.</li>
+        </ol>
+      </section>
+
+      <section id="sec-state-cd-draft">
+        <h3><code>CD-draft</code> &mdash; CD comment resolution</h3>
+        <dl>
+          <dt data-slot="description">Description</dt>
+          <dd>Comment resolution &mdash; either pre-FCD comments from the TC or PCD comments from the public period.</dd>
+          <dt data-slot="metadata">Metadata</dt>
+          <dd><code>pubState=draft</code>, <code>pubStage=CD</code>, <code>pubConfidential=yes</code></dd>
+          <dt data-slot="branch">Branch</dt>
+          <dd><code>YYYYMMDD-cd<em>n</em></code> from <code>main</code> (<em>n</em> increments per iteration: <code>cd1</code>, <code>cd2</code>, &hellip;)</dd>
+          <dt data-slot="release">Latest release</dt>
+          <dd>The prior <code>YYYYMMDD-wd</code> or <code>YYYYMMDD-cd<em>n</em>-1</code> release.</dd>
+          <dt data-slot="redline">Redline</dt>
+          <dd><code>release-rl.html</code> versus the prior CD or WD release</dd>
+          <dt data-slot="notification">Notification</dt>
+          <dd>None.</dd>
+        </dl>
+
+        <p><strong>Leaving this status:</strong></p>
+
+        <p><em>When comment resolution is complete:</em></p>
+        <ol>
+          <li data-actor="document-editor"><em>Document editor:</em> On the open comment-resolution PR, set <code>pubState=pub</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Set <code>pubDateTime</code> to the date resolution was completed (format: <code>YYYY-MM-DD</code>).</li>
+          <li data-actor="dg-chair"><em>DG chair:</em> Reviews and approves the PR.</li>
+          <li>Merge the PR to <code>main</code>. The tooling auto-drafts a <code>YYYYMMDD-cd<em>n</em></code> release.</li>
+          <li>Publish the auto-drafted release per <a href="#bib-smpte-ag-26"></a>.</li>
+          <li>The document is now in <a href="#sec-state-cd-pub"></a>.</li>
+        </ol>
+      </section>
+
+      <section id="sec-state-cd-pub">
+        <h3><code>CD-pub</code> &mdash; Committee Draft (private)</h3>
+        <dl>
+          <dt data-slot="description">Description</dt>
+          <dd>A CD release awaiting next steps. Covers <em>Pre-FCD comment resolution complete</em> and <em>Ready for FCD ballot</em> at the same metadata.</dd>
+          <dt data-slot="metadata">Metadata</dt>
+          <dd><code>pubState=pub</code>, <code>pubStage=CD</code>, <code>pubConfidential=yes</code></dd>
+          <dt data-slot="branch">Branch</dt>
+          <dd>Status lives on <code>main</code>.</dd>
+          <dt data-slot="release">Latest release</dt>
+          <dd><code>YYYYMMDD-cd<em>n</em></code></dd>
+          <dt data-slot="redline">Redline</dt>
+          <dd><code>release-rl.html</code></dd>
+          <dt data-slot="notification">Notification</dt>
+          <dd>None.</dd>
+        </dl>
+
+        <p><strong>Leaving this status:</strong></p>
+
+        <p><em>If the document is to undergo a PCD (Public Committee Draft) period:</em></p>
+        <ol>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch from <code>main</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubConfidential=no</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the new branch to <code>main</code>.</li>
+          <li data-actor="dg-chair"><em>DG chair:</em> Reviews and approves the PR.</li>
+          <li>If the merge will occur on the same calendar day as the prior <code>YYYYMMDD-cd<em>n</em></code> release, include <code>[force-release]</code> in the merge commit message per <a href="#bib-smpte-ag-26"></a>.</li>
+          <li>Merge the PR to <code>main</code>. The tooling auto-drafts a release (with a <code>-2</code>, <code>-3</code>, &hellip; suffix when <code>[force-release]</code> was used).</li>
+          <li>Publish the auto-drafted release per <a href="#bib-smpte-ag-26"></a>.</li>
+          <li data-actor="dg-chair"><em>DG chair:</em> Notifies the TC chair the document is ready for PCD.</li>
+          <li data-actor="tc-chair"><em>TC chair:</em> Requests PCD publication from SMPTE HO.</li>
+          <li data-actor="smpte-ho"><em>SMPTE HO:</em> Publishes PCD.</li>
+          <li>The document is now in <a href="#sec-state-cd-pub-public"></a>.</li>
+        </ol>
+
+        <p><em>If the document is to undergo a FCD (Final Committee Draft) ballot:</em></p>
+        <ol>
+          <li data-actor="dg-chair"><em>DG chair:</em> Notifies the TC chair the document is ready for FCD Ballot.</li>
+          <li data-actor="tc-chair"><em>TC chair:</em> Requests/starts FCD ballot from SMPTE HO.</li>
+          <li>The document is now in <a href="#sec-state-fcd-ballot"></a>.</li>
+        </ol>
+      </section>
+
+      <section id="sec-state-cd-pub-public">
+        <h3><code>CD-pub-public</code> &mdash; PCD period (public)</h3>
+        <dl>
+          <dt data-slot="description">Description</dt>
+          <dd>Public Committee Draft period. The CD release is made publicly available; <code>pubConfidential</code> reflects this.</dd>
+          <dt data-slot="metadata">Metadata</dt>
+          <dd><code>pubState=pub</code>, <code>pubStage=CD</code>, <code>pubConfidential=no</code></dd>
+          <dt data-slot="branch">Branch</dt>
+          <dd>Status lives on <code>main</code>.</dd>
+          <dt data-slot="release">Latest release</dt>
+          <dd>The release auto-drafted on entry &mdash; typically the same <code>YYYYMMDD-cd<em>n</em></code> tag as the originating <a href="#sec-state-cd-pub"></a> release, possibly with a numeric suffix if <code>[force-release]</code> was used (see <a href="#bib-smpte-ag-26"></a>).</dd>
+          <dt data-slot="redline">Redline</dt>
+          <dd><code>release-rl.html</code> (unchanged from <code>CD-pub</code>)</dd>
+          <dt data-slot="notification">Notification</dt>
+          <dd>SMPTE HO announces the PCD period to the public.</dd>
+        </dl>
+
+        <p><strong>Leaving this status:</strong></p>
+
+        <p><em>When the PCD period ends:</em></p>
+        <ol>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-cd<em>n+1</em></code> from <code>main</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubState=draft</code>, <code>pubStage=CD</code>, and <code>pubConfidential=yes</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the new branch to <code>main</code>. The PR is the work container for the next status; do not merge yet.</li>
+          <li>The document is now in <a href="#sec-state-cd-draft"></a> &mdash; back to Pre-FCD (Final Committee Draft) review. Any PCD comments are addressed as additional commits to this open PR; the PR is merged when leaving <code>CD-draft</code>.</li>
+        </ol>
+      </section>
+
+      <section id="sec-state-fcd-ballot">
+        <h3><code>FCD-ballot</code> &mdash; FCD ballot period</h3>
+        <dl>
+          <dt data-slot="description">Description</dt>
+          <dd>The TC conducts the FCD ballot. The outcome determines whether the document advances directly to Draft Publication or returns for FCD comment resolution.</dd>
+          <dt data-slot="metadata">Metadata</dt>
+          <dd><code>pubState=pub</code>, <code>pubStage=CD</code>, <code>pubConfidential=yes</code></dd>
+          <dt data-slot="branch">Branch</dt>
+          <dd>Status lives on <code>main</code>.</dd>
+          <dt data-slot="release">Latest release</dt>
+          <dd><code>YYYYMMDD-cd<em>n</em></code></dd>
+          <dt data-slot="redline">Redline</dt>
+          <dd><code>release-rl.html</code></dd>
+          <dt data-slot="notification">Notification</dt>
+          <dd>The TC chair sends the release link to the TC for the FCD ballot.</dd>
+        </dl>
+
+        <p><strong>Leaving this status:</strong></p>
+
+        <p><em>If the FCD ballot received comments:</em></p>
+        <ol>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-fcd-cr</code> from <code>main</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubState=draft</code> and <code>pubStage=FCD</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the new branch to <code>main</code>. The PR is the work container for the next status; do not merge yet.</li>
+          <li>The document is now in <a href="#sec-state-fcd-draft"></a>. Comment resolution work happens as additional commits to this open PR; the PR is merged when leaving <code>FCD-draft</code>.</li>
+        </ol>
+
+        <p><em>If the FCD ballot passed without comments:</em></p>
+        <ol>
+          <li data-actor="tc-chair"><em>TC chair:</em> Requests DP/ST Audit package from DG.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-dp</code> from <code>main</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubStage=DP</code>. (<code>pubState</code> remains <code>pub</code>.)</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the new branch to <code>main</code>.</li>
+          <li data-actor="dg-chair"><em>DG chair:</em> Reviews and approves the PR.</li>
+          <li>Merge the PR to <code>main</code>. The tooling auto-drafts a <code>YYYYMMDD-dp</code> release.</li>
+          <li>Publish the auto-drafted release per <a href="#bib-smpte-ag-26"></a>.</li>
+          <li>The document is now in <a href="#sec-state-dp-pub"></a>.</li>
+        </ol>
+      </section>
+
+      <section id="sec-state-fcd-draft">
+        <h3><code>FCD-draft</code> &mdash; FCD ballot comment resolution</h3>
+        <dl>
+          <dt data-slot="description">Description</dt>
+          <dd>Resolving comments raised during the FCD ballot.</dd>
+          <dt data-slot="metadata">Metadata</dt>
+          <dd><code>pubState=draft</code>, <code>pubStage=FCD</code>, <code>pubConfidential=yes</code></dd>
+          <dt data-slot="branch">Branch</dt>
+          <dd><code>YYYYMMDD-fcd-cr</code> (or similarly named comment-resolution branch) from <code>main</code></dd>
+          <dt data-slot="release">Latest release</dt>
+          <dd>The prior <code>YYYYMMDD-cd<em>n</em></code> release (the FCD ballot zip).</dd>
+          <dt data-slot="redline">Redline</dt>
+          <dd><code>release-rl.html</code> versus the prior CD release</dd>
+          <dt data-slot="notification">Notification</dt>
+          <dd>None.</dd>
+        </dl>
+
+        <p><strong>Leaving this status:</strong></p>
+
+        <p><em>When comment resolution is complete:</em></p>
+        <ol>
+          <li data-actor="document-editor"><em>Document editor:</em> On the open comment-resolution PR, set <code>pubState=pub</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Set <code>pubDateTime</code> to the date resolution was completed (format: <code>YYYY-MM-DD</code>).</li>
+          <li data-actor="dg-chair"><em>DG chair:</em> Reviews and approves the PR.</li>
+          <li>Merge the PR to <code>main</code>. The tooling auto-drafts a <code>YYYYMMDD-fcd</code> release.</li>
+          <li>Publish the auto-drafted release per <a href="#bib-smpte-ag-26"></a>.</li>
+          <li data-actor="dg-chair"><em>DG chair:</em> Notifies the TC chair the document is ready for Pre-DP review.</li>
+          <li data-actor="tc-chair"><em>TC chair:</em> Requests/starts Pre-DP review from SMPTE HO.</li>
+          <li>The document is now in <a href="#sec-state-fcd-pub"></a>.</li>
+        </ol>
+      </section>
+
+      <section id="sec-state-fcd-pub">
+        <h3><code>FCD-pub</code> &mdash; Pre-DP review</h3>
+        <dl>
+          <dt data-slot="description">Description</dt>
+          <dd>FCD comments resolved; the TC reviews the document before the DP ballot is called. Covers <em>FCD comment resolution complete</em> and <em>Pre-DP review</em> at the same metadata.</dd>
+          <dt data-slot="metadata">Metadata</dt>
+          <dd><code>pubState=pub</code>, <code>pubStage=FCD</code>, <code>pubConfidential=yes</code></dd>
+          <dt data-slot="branch">Branch</dt>
+          <dd>Status lives on <code>main</code>.</dd>
+          <dt data-slot="release">Latest release</dt>
+          <dd><code>YYYYMMDD-fcd</code></dd>
+          <dt data-slot="redline">Redline</dt>
+          <dd><code>release-rl.html</code> versus the prior CD or FCD release</dd>
+          <dt data-slot="notification">Notification</dt>
+          <dd>The TC chair sends the release link to the TC for Pre-DP review.</dd>
+        </dl>
+
+        <p><strong>Leaving this status:</strong></p>
+
+        <p><em>When the Pre-DP review is complete:</em></p>
+        <ol>
+          <li data-actor="dg-chair"><em>DG chair:</em> Notifies the TC chair the document is ready for DP Ballot.</li>
+          <li data-actor="tc-chair"><em>TC chair:</em> Requests/starts DP Ballot from SMPTE HO.</li>
+          <li>The document is now in <a href="#sec-state-dp-ballot"></a>.</li>
+        </ol>
+      </section>
+
+      <section id="sec-state-dp-ballot">
+        <h3><code>DP-ballot</code> &mdash; DP ballot period</h3>
+        <dl>
+          <dt data-slot="description">Description</dt>
+          <dd>The TC conducts the DP ballot to determine whether the document advances to Draft Publication.</dd>
+          <dt data-slot="metadata">Metadata</dt>
+          <dd><code>pubState=pub</code>, <code>pubStage=FCD</code>, <code>pubConfidential=yes</code></dd>
+          <dt data-slot="branch">Branch</dt>
+          <dd>Status lives on <code>main</code>.</dd>
+          <dt data-slot="release">Latest release</dt>
+          <dd><code>YYYYMMDD-fcd</code></dd>
+          <dt data-slot="redline">Redline</dt>
+          <dd><code>release-rl.html</code> versus the prior CD or FCD release</dd>
+          <dt data-slot="notification">Notification</dt>
+          <dd>The TC chair sends the release link to the TC for the DP ballot.</dd>
+        </dl>
+
+        <p><strong>Leaving this status:</strong></p>
+
+        <p><em>When the DP ballot passes:</em></p>
+        <ol>
+          <li data-actor="tc-chair"><em>TC chair:</em> Requests ST Audit package from DG.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-dp</code> from <code>main</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubStage=DP</code>. (<code>pubState</code> remains <code>pub</code>.)</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the new branch to <code>main</code>.</li>
+          <li data-actor="dg-chair"><em>DG chair:</em> Reviews and approves the PR.</li>
+          <li>Merge the PR to <code>main</code>. The tooling auto-drafts a <code>YYYYMMDD-dp</code> release.</li>
+          <li>Publish the auto-drafted release per <a href="#bib-smpte-ag-26"></a>.</li>
+          <li>The document is now in <a href="#sec-state-dp-pub"></a>.</li>
+        </ol>
+
+        <p><em>If the DP ballot does not pass:</em></p>
+        <ol>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-cd<em>n+1</em></code> from <code>main</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubState=draft</code> and <code>pubStage=CD</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the new branch to <code>main</code>. The PR is the work container for the next status; do not merge yet.</li>
+          <li>The document is now in <a href="#sec-state-cd-draft"></a> &mdash; back to the DG as a CD. Resolution work happens as additional commits to this open PR; the PR is merged when leaving <code>CD-draft</code>.</li>
+        </ol>
+      </section>
+
+      <section id="sec-state-dp-pub">
+        <h3><code>DP-pub</code> &mdash; Draft Publication</h3>
+        <dl>
+          <dt data-slot="description">Description</dt>
+          <dd>DP release awaiting ST audit. Covers <em>FCD ballot passes (no comments)</em>, <em>DP ballot passes</em>, and <em>Ready for ST audit</em> at the same metadata.</dd>
+          <dt data-slot="metadata">Metadata</dt>
+          <dd><code>pubState=pub</code>, <code>pubStage=DP</code>, <code>pubConfidential=yes</code></dd>
+          <dt data-slot="branch">Branch</dt>
+          <dd>Status lives on <code>main</code>.</dd>
+          <dt data-slot="release">Latest release</dt>
+          <dd><code>YYYYMMDD-dp</code></dd>
+          <dt data-slot="redline">Redline</dt>
+          <dd><code>release-rl.html</code> versus the prior FCD or CD release</dd>
+          <dt data-slot="notification">Notification</dt>
+          <dd>The TC chair sends the release link to DoS for ST audit.</dd>
+        </dl>
+
+        <p><strong>Leaving this status:</strong></p>
+
+        <p><em>When the document is ready for ST audit:</em></p>
+        <ol>
+          <li data-actor="dg-chair"><em>DG chair:</em> Notifies the TC chair the document is ready for ST Audit.</li>
+          <li data-actor="tc-chair"><em>TC chair:</em> Requests/starts ST Audit from SMPTE HO.</li>
+          <li>The document is now in <a href="#sec-state-st-audit"></a>.</li>
+        </ol>
+      </section>
+
+      <section id="sec-state-st-audit">
+        <h3><code>ST-audit</code> &mdash; ST audit period</h3>
+        <dl>
+          <dt data-slot="description">Description</dt>
+          <dd>The Standards Committee (ST) conducts the audit to verify the document is ready for publication.</dd>
+          <dt data-slot="metadata">Metadata</dt>
+          <dd><code>pubState=pub</code>, <code>pubStage=DP</code>, <code>pubConfidential=yes</code></dd>
+          <dt data-slot="branch">Branch</dt>
+          <dd>Status lives on <code>main</code>.</dd>
+          <dt data-slot="release">Latest release</dt>
+          <dd><code>YYYYMMDD-dp</code></dd>
+          <dt data-slot="redline">Redline</dt>
+          <dd><code>release-rl.html</code> versus the prior FCD or CD release</dd>
+          <dt data-slot="notification">Notification</dt>
+          <dd>None &mdash; audit is in progress at DoS.</dd>
+        </dl>
+
+        <p><strong>Leaving this status:</strong></p>
+
+        <p><em>When the ST audit completes:</em></p>
+        <ol>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-pub</code> from <code>main</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubStage=PUB</code> and <code>pubState=draft</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the new branch to <code>main</code>. The PR is the work container for the next status; do not merge yet.</li>
+          <li>The document is now in <a href="#sec-state-pub-draft"></a>. Any final preparation happens as additional commits to this open PR; the PR is merged when leaving <code>PUB-draft</code>.</li>
+        </ol>
+
+        <p><em>If the ST audit does not pass:</em></p>
+
+        <p class="note">An ST audit failure typically indicates a process issue rather than a content defect. No dedicated fall-back path exists at present; the procedure below routes the document back to <code>CD-draft</code> for resolution as a temporary measure.</p>
+
+        <ol>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-cd<em>n+1</em></code> from <code>main</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubState=draft</code> and <code>pubStage=CD</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the new branch to <code>main</code>. The PR is the work container for the next status; do not merge yet.</li>
+          <li>The document is now in <a href="#sec-state-cd-draft"></a> &mdash; back to the DG as a CD. Resolution happens as additional commits to this open PR; the PR is merged when leaving <code>CD-draft</code>.</li>
+        </ol>
+      </section>
+
+      <section id="sec-state-pub-draft">
+        <h3><code>PUB-draft</code> &mdash; Awaiting publication</h3>
+        <dl>
+          <dt data-slot="description">Description</dt>
+          <dd>ST audit is complete; the document is held awaiting final publication.</dd>
+          <dt data-slot="metadata">Metadata</dt>
+          <dd><code>pubState=draft</code>, <code>pubStage=PUB</code>, <code>pubConfidential=yes</code></dd>
+          <dt data-slot="branch">Branch</dt>
+          <dd>The <code>YYYYMMDD-pub</code> branch used to enter this status persists; the leaving change is made on this same branch.</dd>
+          <dt data-slot="release">Latest release</dt>
+          <dd>The prior <code>YYYYMMDD-dp</code> release. No release is auto-drafted on entering this status.</dd>
+          <dt data-slot="redline">Redline</dt>
+          <dd>None on entry; the next release will produce <code>pub-rl.html</code> versus the prior published edition.</dd>
+          <dt data-slot="notification">Notification</dt>
+          <dd>None &mdash; internal hold.</dd>
+        </dl>
+
+        <p><strong>Leaving this status:</strong></p>
+
+        <p><em>When ready to publish:</em></p>
+        <ol>
+           <li data-actor="smpte-ho"><em>SMPTE HO:</em> Creates an issue in <a href="#bib-smpte-document-library"></a> to request the publication package from @TC/DG chair.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> On the open PR, set <code>pubState=pub</code> and <code>pubConfidential=no</code>.</li>
+          <li data-actor="dg-chair"><em>DG chair:</em> Reviews and approves the PR.</li>
+          <li data-actor="tc-chair"><em>TC chair:</em> Reviews and approves the PR.</li>
+          <li>Merge the PR to <code>main</code>. The tooling auto-drafts a <code>YYYYMMDD-pub</code> release.</li>
+          <li>Publish the auto-drafted release per <a href="#bib-smpte-ag-26"></a>.</li>
+          <li data-actor="tc-chair"><em>TC chair:</em> Sends release package to SMPTE HO, as a comment to the issue created.</li>
+          <li>The document is now in <a href="#sec-state-pub-pub"></a>.</li>
+        </ol>
+      </section>
+
+      <section id="sec-state-pub-pub">
+        <h3><code>PUB-pub</code> &mdash; Published</h3>
+        <dl>
+          <dt data-slot="description">Description</dt>
+          <dd>The document is published. The final release artifact is delivered to SMPTE HO for inclusion in <a href="#bib-smpte-document-library"></a>. This is a terminal status for the current edition.</dd>
+          <dt data-slot="metadata">Metadata</dt>
+          <dd><code>pubState=pub</code>, <code>pubStage=PUB</code>, <code>pubConfidential=no</code></dd>
+          <dt data-slot="branch">Branch</dt>
+          <dd>Status lives on <code>main</code>. Terminal &mdash; no further outgoing branch is created.</dd>
+          <dt data-slot="release">Latest release</dt>
+          <dd><code>YYYYMMDD-pub</code></dd>
+          <dt data-slot="redline">Redline</dt>
+          <dd><code>pub-rl.html</code> versus the prior published edition</dd>
+          <dt data-slot="notification">Notification</dt>
+          <dd>The TC chair sends the release link to SMPTE HO for publication in <a href="#bib-smpte-document-library"></a>. Automation for this step is planned for a future date.</dd>
+        </dl>
+
+        <p><strong>Leaving this status:</strong></p>
+
+        <p>None &mdash; this is a terminal status. A subsequent revision begins a new lifecycle from <a href="#sec-state-wd-draft"></a>, working from this <code>YYYYMMDD-pub</code> release as the baseline.</p>
+      </section>
+
     </section>
 
   </body>
