@@ -11,7 +11,7 @@
     <meta itemprop="pubStage" content="PUB" />
     <meta itemprop="pubConfidential" content="yes" />
     <meta itemprop="pubTC" content="ST" />
-    <meta itemprop="pubDateTime" content="2026-05-05" />
+    <meta itemprop="pubDateTime" content="2026-05-26" />
     <!-- <meta itemprop="pubRevisionOf" content="SMPTE ST XXXX-Y:ZZZZ" /> -->
 
     <title>Document Process and Workflow</title>
@@ -348,7 +348,7 @@
 
         <p><em>If pre-FCD comments are received:</em></p>
         <ol>
-          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-cd1</code> from <code>main</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-cd</code> from <code>main</code>.</li>
           <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubState=draft</code> and <code>pubStage=CD</code>.</li>
           <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the new branch to <code>main</code>. The PR is the work container for the next status; do not merge yet.</li>
           <li>The document is now in <a href="#sec-state-cd-draft"></a>. Comment resolution work happens as additional commits to this open PR; the PR is merged when leaving <code>CD-draft</code>.</li>
@@ -356,27 +356,27 @@
 
         <p><em>If no pre-FCD comments are received:</em></p>
         <ol>
-          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-cd1</code> from <code>main</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-cd</code> from <code>main</code>.</li>
           <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubState=pub</code> and <code>pubStage=CD</code>.</li>
           <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the new branch to <code>main</code>.</li>
           <li data-actor="dg-chair"><em>DG chair:</em> Reviews and approves the PR.</li>
-          <li>Merge the PR to <code>main</code>. The tooling auto-drafts a <code>YYYYMMDD-cd1</code> release.</li>
+          <li>Merge the PR to <code>main</code>. The tooling auto-drafts a <code>YYYYMMDD-cd</code> release.</li>
           <li>Publish the auto-drafted release per <a href="#bib-smpte-ag-26"></a>.</li>
           <li>The document is now in <a href="#sec-state-cd-pub"></a>.</li>
         </ol>
       </section>
 
       <section id="sec-state-cd-draft">
-        <h3><code>CD-draft</code> &mdash; CD comment resolution</h3>
+        <h3><code>CD-draft</code> &mdash; CD comment resolution</h3> 
         <dl>
           <dt data-slot="description">Description</dt>
           <dd>Comment resolution &mdash; either pre-FCD comments from the TC or PCD comments from the public period.</dd>
           <dt data-slot="metadata">Metadata</dt>
           <dd><code>pubState=draft</code>, <code>pubStage=CD</code>, <code>pubConfidential=yes</code></dd>
           <dt data-slot="branch">Branch</dt>
-          <dd><code>YYYYMMDD-cd<em>n</em></code> from <code>main</code> (<em>n</em> increments per iteration: <code>cd1</code>, <code>cd2</code>, &hellip;)</dd>
+          <dd><code>YYYYMMDD-cd<em>-n</em></code> from <code>main</code> (<em>n</em> increments per iteration: <code>cd-1</code>, <code>cd-2</code>, &hellip;)</dd>
           <dt data-slot="release">Latest release</dt>
-          <dd>The prior <code>YYYYMMDD-wd</code> or <code>YYYYMMDD-cd<em>n</em>-1</code> release.</dd>
+          <dd>The prior <code>YYYYMMDD-wd</code> or <code>YYYYMMDD-cd<em>-n</em>-1</code> release.</dd>
           <dt data-slot="redline">Redline</dt>
           <dd><code>release-rl.html</code> versus the prior CD or WD release</dd>
           <dt data-slot="notification">Notification</dt>
@@ -390,7 +390,7 @@
           <li data-actor="document-editor"><em>Document editor:</em> On the open comment-resolution PR, set <code>pubState=pub</code>.</li>
           <li data-actor="document-editor"><em>Document editor:</em> Set <code>pubDateTime</code> to the date resolution was completed (format: <code>YYYY-MM-DD</code>).</li>
           <li data-actor="dg-chair"><em>DG chair:</em> Reviews and approves the PR.</li>
-          <li>Merge the PR to <code>main</code>. The tooling auto-drafts a <code>YYYYMMDD-cd<em>n</em></code> release.</li>
+          <li>Merge the PR to <code>main</code>. The tooling auto-drafts a <code>YYYYMMDD-cd</code> release.</li>
           <li>Publish the auto-drafted release per <a href="#bib-smpte-ag-26"></a>.</li>
           <li>The document is now in <a href="#sec-state-cd-pub"></a>.</li>
         </ol>
@@ -421,7 +421,7 @@
           <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubConfidential=no</code>.</li>
           <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the new branch to <code>main</code>.</li>
           <li data-actor="dg-chair"><em>DG chair:</em> Reviews and approves the PR.</li>
-          <li>If the merge will occur on the same calendar day as the prior <code>YYYYMMDD-cd<em>n</em></code> release, include <code>[force-release]</code> in the merge commit message per <a href="#bib-smpte-ag-26"></a>.</li>
+          <li>If the merge will occur on the same calendar day as the prior <code>YYYYMMDD-cd<em>-n</em></code> release, include <code>[force-release]</code> in the merge commit message per <a href="#bib-smpte-ag-26"></a>.</li>
           <li>Merge the PR to <code>main</code>. The tooling auto-drafts a release (with a <code>-2</code>, <code>-3</code>, &hellip; suffix when <code>[force-release]</code> was used).</li>
           <li>Publish the auto-drafted release per <a href="#bib-smpte-ag-26"></a>.</li>
           <li data-actor="dg-chair"><em>DG chair:</em> Notifies the TC chair the document is ready for PCD.</li>
@@ -448,7 +448,7 @@
           <dt data-slot="branch">Branch</dt>
           <dd>Status lives on <code>main</code>.</dd>
           <dt data-slot="release">Latest release</dt>
-          <dd>The release auto-drafted on entry &mdash; typically the same <code>YYYYMMDD-cd<em>n</em></code> tag as the originating <a href="#sec-state-cd-pub"></a> release, possibly with a numeric suffix if <code>[force-release]</code> was used (see <a href="#bib-smpte-ag-26"></a>).</dd>
+          <dd>The release auto-drafted on entry &mdash; typically the same <code>YYYYMMDD-cd</code> tag as the originating <a href="#sec-state-cd-pub"></a> release, possibly with a numeric suffix if <code>[force-release]</code> was used (see <a href="#bib-smpte-ag-26"></a>).</dd>
           <dt data-slot="redline">Redline</dt>
           <dd><code>release-rl.html</code> (unchanged from <code>CD-pub</code>)</dd>
           <dt data-slot="notification">Notification</dt>
@@ -476,7 +476,7 @@
           <dt data-slot="branch">Branch</dt>
           <dd>Status lives on <code>main</code>.</dd>
           <dt data-slot="release">Latest release</dt>
-          <dd><code>YYYYMMDD-cd<em>n</em></code></dd>
+          <dd><code>YYYYMMDD-cd</code></dd>
           <dt data-slot="redline">Redline</dt>
           <dd><code>release-rl.html</code></dd>
           <dt data-slot="notification">Notification</dt>
@@ -516,7 +516,7 @@
           <dt data-slot="branch">Branch</dt>
           <dd><code>YYYYMMDD-fcd-cr</code> (or similarly named comment-resolution branch) from <code>main</code></dd>
           <dt data-slot="release">Latest release</dt>
-          <dd>The prior <code>YYYYMMDD-cd<em>n</em></code> release (the FCD ballot zip).</dd>
+          <dd>The prior <code>YYYYMMDD-cd</code> release (the FCD ballot zip).</dd>
           <dt data-slot="redline">Redline</dt>
           <dd><code>release-rl.html</code> versus the prior CD release</dd>
           <dt data-slot="notification">Notification</dt>
@@ -598,7 +598,7 @@
 
         <p><em>If the DP ballot does not pass:</em></p>
         <ol>
-          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-cd<em>n+1</em></code> from <code>main</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-cd</code> from <code>main</code>.</li>
           <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubState=draft</code> and <code>pubStage=CD</code>.</li>
           <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the new branch to <code>main</code>. The PR is the work container for the next status; do not merge yet.</li>
           <li>The document is now in <a href="#sec-state-cd-draft"></a> &mdash; back to the DG as a CD. Resolution work happens as additional commits to this open PR; the PR is merged when leaving <code>CD-draft</code>.</li>
@@ -664,7 +664,7 @@
         <p class="note">An ST audit failure typically indicates a process issue rather than a content defect. No dedicated fall-back path exists at present; the procedure below routes the document back to <code>CD-draft</code> for resolution as a temporary measure.</p>
 
         <ol>
-          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-cd<em>n+1</em></code> from <code>main</code>.</li>
+          <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-cd</code> from <code>main</code>.</li>
           <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubState=draft</code> and <code>pubStage=CD</code>.</li>
           <li data-actor="document-editor"><em>Document editor:</em> Open a Pull Request from the new branch to <code>main</code>. The PR is the work container for the next status; do not merge yet.</li>
           <li>The document is now in <a href="#sec-state-cd-draft"></a> &mdash; back to the DG as a CD. Resolution happens as additional commits to this open PR; the PR is merged when leaving <code>CD-draft</code>.</li>
