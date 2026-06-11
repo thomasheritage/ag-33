@@ -157,11 +157,11 @@
             <td><a href="#sec-state-fcd-pub"></a></td>
           </tr>
           <tr>
-            <td>DP ballot period</td>
+            <td>DP vote period</td>
             <td><code>FCD</code></td>
             <td><code>pub</code></td>
             <td><code>yes</code></td>
-            <td><a href="#sec-state-dp-ballot"></a></td>
+            <td><a href="#sec-state-dp-vote"></a></td>
           </tr>
           <tr>
             <td class="center-cell" colspan="5"><em>(ELSE)</em></td>
@@ -174,7 +174,7 @@
             <td><a href="#sec-state-dp-pub"></a></td>
           </tr>
           <tr>
-            <td>DP ballot passes</td>
+            <td>DP vote passes</td>
             <td><code>DP</code></td>
             <td><code>pub</code></td>
             <td><code>yes</code></td>
@@ -432,7 +432,7 @@
 
         <p><em>If the document is to undergo a FCD (Final Committee Draft) ballot:</em></p>
         <ol>
-          <li data-actor="dg-chair"><em>DG chair:</em> Notifies the TC chair the document is ready for FCD Ballot.</li>
+          <li data-actor="dg-chair"><em>DG chair:</em> Notifies the TC chair the document is ready for FCD ballot.</li>
           <li data-actor="tc-chair"><em>TC chair:</em> Requests/starts FCD ballot from SMPTE HO.</li>
           <li>The document is now in <a href="#sec-state-fcd-ballot"></a>.</li>
         </ol>
@@ -542,7 +542,7 @@
         <h3><code>FCD-pub</code> &mdash; Pre-DP review</h3>
         <dl>
           <dt data-slot="description">Description</dt>
-          <dd>FCD comments resolved; the TC reviews the document before the DP ballot is called. Covers <em>FCD comment resolution complete</em> and <em>Pre-DP review</em> at the same metadata.</dd>
+          <dd>FCD comments resolved; the TC reviews the document before the DP vote is called. Covers <em>FCD comment resolution complete</em> and <em>Pre-DP review</em> at the same metadata.</dd>
           <dt data-slot="metadata">Metadata</dt>
           <dd><code>pubState=pub</code>, <code>pubStage=FCD</code>, <code>pubConfidential=yes</code></dd>
           <dt data-slot="branch">Branch</dt>
@@ -559,17 +559,17 @@
 
         <p><em>When the Pre-DP review is complete:</em></p>
         <ol>
-          <li data-actor="dg-chair"><em>DG chair:</em> Notifies the TC chair the document is ready for DP Ballot.</li>
-          <li data-actor="tc-chair"><em>TC chair:</em> Requests/starts DP Ballot from SMPTE HO.</li>
-          <li>The document is now in <a href="#sec-state-dp-ballot"></a>.</li>
+          <li data-actor="dg-chair"><em>DG chair:</em> Notifies the TC chair the document is ready for DP vote.</li>
+          <li data-actor="tc-chair"><em>TC chair:</em> Requests/starts DP vote from SMPTE HO.</li>
+          <li>The document is now in <a href="#sec-state-dp-vote"></a>.</li>
         </ol>
       </section>
 
-      <section id="sec-state-dp-ballot">
-        <h3><code>DP-ballot</code> &mdash; DP ballot period</h3>
+      <section id="sec-state-dp-vote">
+        <h3><code>DP-vote</code> &mdash; DP vote period</h3>
         <dl>
           <dt data-slot="description">Description</dt>
-          <dd>The TC conducts the DP ballot to determine whether the document advances to Draft Publication.</dd>
+          <dd>The TC conducts the DP vote to determine whether the document advances to Draft Publication.</dd>
           <dt data-slot="metadata">Metadata</dt>
           <dd><code>pubState=pub</code>, <code>pubStage=FCD</code>, <code>pubConfidential=yes</code></dd>
           <dt data-slot="branch">Branch</dt>
@@ -579,12 +579,12 @@
           <dt data-slot="redline">Redline</dt>
           <dd><code>release-rl.html</code> versus the prior CD or FCD release</dd>
           <dt data-slot="notification">Notification</dt>
-          <dd>The TC chair sends the release link to the TC for the DP ballot.</dd>
+          <dd>The TC chair sends the release link to the TC for the DP vote.</dd>
         </dl>
 
         <p><strong>Leaving this status:</strong></p>
 
-        <p><em>When the DP ballot passes:</em></p>
+        <p><em>When the DP vote passes:</em></p>
         <ol>
           <li data-actor="tc-chair"><em>TC chair:</em> Requests ST Audit package from DG.</li>
           <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-dp</code> from <code>main</code>.</li>
@@ -596,7 +596,7 @@
           <li>The document is now in <a href="#sec-state-dp-pub"></a>.</li>
         </ol>
 
-        <p><em>If the DP ballot does not pass:</em></p>
+        <p><em>If the DP vote does not pass:</em></p>
         <ol>
           <li data-actor="document-editor"><em>Document editor:</em> Branch <code>YYYYMMDD-cd</code> from <code>main</code>.</li>
           <li data-actor="document-editor"><em>Document editor:</em> On the new branch, set <code>pubState=draft</code> and <code>pubStage=CD</code>.</li>
@@ -609,7 +609,7 @@
         <h3><code>DP-pub</code> &mdash; Draft Publication</h3>
         <dl>
           <dt data-slot="description">Description</dt>
-          <dd>DP release awaiting ST audit. Covers <em>FCD ballot passes (no comments)</em>, <em>DP ballot passes</em>, and <em>Ready for ST audit</em> at the same metadata.</dd>
+          <dd>DP release awaiting ST audit. Covers <em>FCD ballot passes (no comments)</em>, <em>DP vote passes</em>, and <em>Ready for ST audit</em> at the same metadata.</dd>
           <dt data-slot="metadata">Metadata</dt>
           <dd><code>pubState=pub</code>, <code>pubStage=DP</code>, <code>pubConfidential=yes</code></dd>
           <dt data-slot="branch">Branch</dt>
